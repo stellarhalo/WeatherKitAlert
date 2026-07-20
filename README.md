@@ -162,7 +162,7 @@ npm run build:dev          # 开发模式（不压缩）
 
 本项目最初基于 [NSRingo/WeatherKit](https://github.com/NSRingo/WeatherKit) 项目，原作者为 VirgilClyne、WordlessEcho、001，感谢他们的开创性工作。
 
-本仓库为预警模块（Alert Override）的独立维护版本，已与 iRingo 项目分离。
+本仓库为预警模块（Alert Override）的独立维护版本。
 
 ## 许可证
 
