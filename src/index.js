@@ -4,9 +4,9 @@ import { renderAppleAlert } from "./renderer.mjs";
 /***************** Processing *****************/
 
 if ($response?.body && typeof $response.body === "string") {
-    const alertData = parseAlertHTML($response.body);
-    if (alertData) {
-        $response.body = renderAppleAlert(alertData);
+    const alerts = parseAlertHTML($response.body);
+    if (alerts.length > 0) {
+        $response.body = renderAppleAlert(alerts);
         // Update content type to HTML
         if ($response.headers) {
             $response.headers["Content-Type"] = "text/html; charset=utf-8";
