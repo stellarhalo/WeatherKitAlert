@@ -1,0 +1,15 @@
+{
+    "name": "@nsringo/weatherkit-alert",
+    "displayName": "iRingo: 🌤 WeatherKit Alert Override",
+    "description": "Override qweather.com severe-weather alert pages with Apple WeatherKit native styling",
+    "version": "1.0.0",
+    "license": "Apache-2.0",
+    "scripts": {
+        "build": "rspack build",
+        "build:dev": "rspack build --mode=development"
+    },
+    "devDependencies": {
+        "@rspack/cli": "^1.7.7",
+        "@rspack/core": "^1.7.7"
+    }
+}
