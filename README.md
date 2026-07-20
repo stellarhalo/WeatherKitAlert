@@ -103,16 +103,12 @@ npm run build:dev          # 开发模式（不压缩）
 | Quantumult X | 需手动转换配置 |
 | Loon | 需手动转换配置 |
 
-## 作者
+## 致谢
 
-- VirgilClyne [GitHub](https://github.com/VirgilClyne)
-- WordlessEcho [GitHub](https://github.com/WordlessEcho)
-- 001 [GitHub](https://github.com/001ProMax)
+感谢 [NSRingo/WeatherKit](https://github.com/NSRingo/WeatherKit) 项目及原作者（VirgilClyne、WordlessEcho、001）的开创性工作。
+
+本仓库是 WeatherKit 项目预警模块（Alert Override）的独立维护版本。
 
 ## 许可证
 
 Apache-2.0
-
----
-
-*属于 [NSRingo](https://NSRingo.github.io/guide/Weather/weather-kit) 项目生态*
