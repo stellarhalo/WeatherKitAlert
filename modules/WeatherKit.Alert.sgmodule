@@ -4,8 +4,8 @@
 #!homepage = https://github.com/stellarhalo/WeatherKitAlert
 #!icon = https://developer.apple.com/assets/elements/icons/weatherkit/weatherkit-128x128.png
 #!category =  WeatherKit
-#!version = 1.0.4
-#!date = 2026-07-20 15:30:00
+#!version = 1.1.0
+#!date = 2026-07-20 16:00:00
 
 [Script]
 WeatherKit.alert.response = type=http-response, pattern=^https?:\/\/www\.qweather\.com\/severe-weather\/, requires-body=1, script-path=https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/alert.bundle.js, argument=
