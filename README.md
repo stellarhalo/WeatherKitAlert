@@ -11,39 +11,85 @@
 - 预警描述与触发条件说明
 - 防御指南
 - 签发机构与区域信息
+- 单条预警默认展开，多条预警全部折叠
 
 ## 安装
 
 ### 前置条件
 
-- [Stash](https://stash.ws/) 或 [Surge](http://nssurge.com/)（支持 `.stoverride` 格式的代理工具）
+- [Stash](https://stash.ws/)、[Surge](http://nssurge.com/)、[Loon](https://www.loon0.com/)、[EGERN](https://egernapp.com/) 或 [Quantumult X](https://quantumult.app/)（支持脚本响应的代理工具）
 
-### 安装步骤
+### Stash / Surge
 
-1. 在 Stash / Surge 中添加模块，输入以下 URL：
+在 Stash 或 Surge 中添加模块，输入以下 URL：
 
 ```
 https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.stoverride
 ```
 
-2. 启用模块，确保 MITM 已开启并信任证书
+### Surge（传统格式）
+
+Surge 也可使用传统 `.sgmodule` 格式：
+
+```
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.sgmodule
+```
+
+### Loon
+
+在 Loon 中添加插件，输入以下 URL：
+
+```
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.plugin
+```
+
+### EGERN
+
+在 EGERN 中添加模块，输入以下 URL：
+
+```
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.srmodule
+```
+
+### Quantumult X
+
+在 Quantumult X 的配置文件中添加以下内容：
+
+```
+[rewrite_local]
+^https?:\/\/www\.qweather\.com\/severe-weather\/ url script-response-body https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/alert.bundle.js
+
+[mitm]
+hostname = www.qweather.com
+```
+
+也可以通过订阅以下配置文件直接添加：
+
+```
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.qx.conf
+```
+
+### 通用步骤
+
+1. 根据你的工具添加对应的模块 / 配置
+2. 确保 MITM 已开启并信任证书
 3. 访问 `https://www.qweather.com/severe-weather/` 下的任意预警页面即可看到效果
 
 ### 自动更新
 
-- **模块配置**：在工具中点击「更新模块」即可获取最新版本的 `.stoverride` 配置
-- **脚本代码**：工具每 24 小时自动检查 `alert.bundle.js` 更新（`interval: 86400`）
+- **Surge / Stash**：模块使用 `script-providers`，脚本文件每 60 秒自动检查更新
+- **其他工具**：重新加载插件 / 模块即可获取最新脚本
 
 ## 工作原理
 
 ```
 用户访问 qweather.com 预警页面
         ↓
-Surge/Stash 拦截响应
+代理工具拦截响应
         ↓
 src/index.js 解析 $response.body
         ↓
-src/parser.mjs 用正则提取预警数据
+src/parser.mjs 用 div 计数法提取预警数据
         ↓
 src/renderer.mjs 生成 Apple WeatherKit HTML
         ↓
@@ -56,13 +102,17 @@ src/renderer.mjs 生成 Apple WeatherKit HTML
 WeatherKitAlert/
 ├── src/
 │   ├── index.js          # 入口脚本，拦截响应、调用解析与渲染
-│   ├── parser.mjs        # 正则 HTML 解析器，提取结构化预警数据
+│   ├── parser.mjs        # div 计数 HTML 解析器，提取结构化预警数据
 │   ├── renderer.mjs      # 生成 Apple WeatherKit 风格 HTML
 │   └── types.d.ts        # TypeScript 类型定义 (AlertData)
 ├── template/
 │   └── stash.alert.handlebars   # Stash 模块模板（Handlebars）
 ├── modules/
-│   └── iRingo.WeatherKit.Alert.stoverride  # Stash/Surge 模块配置
+│   ├── iRingo.WeatherKit.Alert.stoverride  # Stash 模块配置
+│   ├── iRingo.WeatherKit.Alert.sgmodule    # Surge 模块配置
+│   ├── iRingo.WeatherKit.Alert.plugin      # Loon 插件配置
+│   ├── iRingo.WeatherKit.Alert.srmodule    # EGERN 模块配置
+│   └── iRingo.WeatherKit.Alert.qx.conf     # Quantumult X 配置
 ├── dist/
 │   └── alert.bundle.js   # 构建产物（CDN 分发）
 ├── rspack.config.mjs     # rspack 构建配置
@@ -83,25 +133,28 @@ npm run build:dev          # 开发模式（不压缩）
 
 ### 构建产物发布
 
-1. `npm run build` 生成 `dist/alert.bundle.js`
-2. 将 `alert.bundle.js` 与 `modules/iRingo.WeatherKit.Alert.stoverride` 一同上传至 GitHub Releases
-3. 模块中的 `script-providers.url` 使用 `/releases/latest/download/` 路径，确保用户始终获取最新版本
+1. 更新 `package.json` 和 `modules/*` 中的版本号
+2. `npm run build` 生成 `dist/alert.bundle.js`
+3. 将 `dist/alert.bundle.js` 与 `modules/` 下所有平台配置文件一同上传至 GitHub Releases
+4. 删除旧 Release，避免 `/releases/latest/download/` 重定向混乱
 
 ## 技术要点
 
-- **正则解析**：`parser.mjs` 使用 `match()` / `matchAll()` 从原始 HTML 提取数据，不依赖 DOM 解析器
+- **Div 计数解析**：`parser.mjs` 使用 `findMatchingClose()` 处理嵌套 `<div>`，不依赖 DOM 解析器
 - **字符串拼接**：`renderer.mjs` 使用字符串拼接（`+`）而非模板字面量（`` ` ``），避免在 rspack 打包输出中产生反引号冲突
 - **Apple CSS**：页面引用 Apple CDN 上的 `weather_alert.d0054c35839929383291.css`，无需本地维护样式
+- **跨平台兼容**：脚本自动检测 Quantumult X 与 Surge/Stash/Loon/EGERN 的 API 差异，使用对应的 `$done()` 调用方式
 - **无测试 / 无 lint 配置**：独立脚本模块，非标准库项目
 
 ## 兼容性
 
-| 工具 | 支持 |
-|---|---|
-| Stash | ✅ `.stoverride` 格式 |
-| Surge | ✅ `.stoverride` 格式（macOS / iOS） |
-| Quantumult X | 需手动转换配置 |
-| Loon | 需手动转换配置 |
+| 工具 | 支持 | 模块格式 |
+|---|---|---|
+| Stash | ✅ 原生支持 | `.stoverride` |
+| Surge | ✅ 原生支持 | `.stoverride` / `.sgmodule` |
+| Loon | ✅ 原生支持 | `.plugin` |
+| EGERN | ✅ 原生支持 | `.srmodule` |
+| Quantumult X | ✅ 配置订阅 | `.qx.conf` |
 
 ## 致谢
 
