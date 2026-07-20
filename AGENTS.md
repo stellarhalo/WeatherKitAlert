@@ -42,8 +42,8 @@ Uses **rspack** (not webpack). Output: `dist/alert.bundle.js`.
 ## stoverride Format
 
 ```yaml
-name: " iRingo: 🌤 Alert Override"
-version: "X.Y.Z"          # MUST match the release tag (e.g. v1.0.3 → "1.0.3")
+name: " WeatherKit: 🌤 Alert Override"
+version: "X.Y.Z"          # MUST match the release tag (e.g. v1.0.4 → "1.0.4")
 date: "YYYY-MM-DD HH:mm:ss"
 # ...
 script-providers:
@@ -53,9 +53,9 @@ script-providers:
 ```
 
 ### Rules
-- `version` field value MUST be the semver without `v` prefix (e.g. `"1.0.3"`), matching the Git tag.
+- `version` field value MUST be the semver without `v` prefix (e.g. `"1.0.4"`), matching the Git tag.
 - `version` and empty `argument:` fields are required — Stash parses them correctly.
-- `name` and `category` values MUST include the `` (Apple logo) Unicode prefix.
+- `name` and `category` values include the `` (Apple logo) Unicode prefix for Apple-related modules.
 - The `` character (U+F8FF) must be preserved exactly. Do not replace it with space or remove it.
 
 ## Deployment Flow
@@ -75,16 +75,16 @@ Attach ALL of the following to every release:
 | File | Platform |
 |---|---|
 | `dist/alert.bundle.js` | Script bundle (all platforms) |
-| `modules/iRingo.WeatherKit.Alert.stoverride` | Stash / Surge |
-| `modules/iRingo.WeatherKit.Alert.sgmodule` | Surge |
-| `modules/iRingo.WeatherKit.Alert.plugin` | Loon |
-| `modules/iRingo.WeatherKit.Alert.srmodule` | EGERN |
-| `modules/iRingo.WeatherKit.Alert.qx.conf` | Quantumult X |
+| `modules/WeatherKit.Alert.stoverride` | Stash / Surge |
+| `modules/WeatherKit.Alert.sgmodule` | Surge |
+| `modules/WeatherKit.Alert.plugin` | Loon |
+| `modules/WeatherKit.Alert.srmodule` | EGERN |
+| `modules/WeatherKit.Alert.qx.conf` | Quantumult X |
 
 ### Cache Consideration
 
 Stash caches `script-providers` downloads for `interval` seconds (currently 60). When releasing a new version:
-- The stoverride URL (`/releases/latest/download/iRingo.WeatherKit.Alert.stoverride`) stays the same.
+- The stoverride URL (`/releases/latest/download/WeatherKit.Alert.stoverride`) stays the same.
 - The bundle URL (`/releases/latest/download/alert.bundle.js`) stays the same.
 - Users must **delete and re-add** the module in Stash to pick up the new stoverride.
 - The new bundle will be downloaded within `interval` seconds after the module is added.

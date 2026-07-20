@@ -1,15 +1,14 @@
-name: "iRingo: 🌤 Alert Override"
+name: "WeatherKit: 🌤 Alert Override"
 desc: |-
   Override qweather.com severe-weather alert pages
   with Apple WeatherKit native styling
-openUrl: "http://boxjs.com/#/app/iRingo.WeatherKit.Alert"
 author: |-
   VirgilClyne[https://github.com/VirgilClyne]
   WordlessEcho[https://github.com/WordlessEcho]
   001[https://github.com/001ProMax]
-homepage: "https://NSRingo.github.io/guide/Weather/weather-kit"
+homepage: "https://github.com/stellarhalo/WeatherKitAlert"
 icon: "https://developer.apple.com/assets/elements/icons/weatherkit/weatherkit-128x128.png"
-category: " iRingo"
+category: "WeatherKit"
 date: "{{now "yyyy-MM-dd HH:mm:ss"}}"
 version: "{{@package 'version'}}"
 
@@ -26,4 +25,4 @@ http:
 script-providers:
   WeatherKit.alert.response:
     url: https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/alert.bundle.js
-    interval: 86400
+    interval: 60

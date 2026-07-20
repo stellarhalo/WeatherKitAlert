@@ -1,6 +1,6 @@
 {
-    "name": "@nsringo/weatherkit-alert",
-    "displayName": "iRingo: 🌤 WeatherKit Alert Override",
+    "name": "weatherkit-alert",
+    "displayName": "WeatherKit: 🌤 Alert Override",
     "description": "Override qweather.com severe-weather alert pages with Apple WeatherKit native styling",
     "version": "1.0.4",
     "license": "Apache-2.0",

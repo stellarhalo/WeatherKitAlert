@@ -1,4 +1,4 @@
-#  iRingo: 🌤 WeatherKit Alert Override
+#  WeatherKit: 🌤 Alert Override
 
 替换和风天气 (qweather.com) 预警页面，以 Apple WeatherKit 原生样式呈现预警信息。
 
@@ -26,7 +26,7 @@
 在 Stash 或 Surge 中添加模块，输入以下 URL：
 
 ```
-https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.stoverride
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/WeatherKit.Alert.stoverride
 ```
 
 ### Surge（传统格式）
@@ -34,7 +34,7 @@ https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.W
 Surge 也可使用传统 `.sgmodule` 格式：
 
 ```
-https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.sgmodule
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/WeatherKit.Alert.sgmodule
 ```
 
 ### Loon
@@ -42,7 +42,7 @@ https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.W
 在 Loon 中添加插件，输入以下 URL：
 
 ```
-https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.plugin
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/WeatherKit.Alert.plugin
 ```
 
 ### EGERN
@@ -50,7 +50,7 @@ https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.W
 在 EGERN 中添加模块，输入以下 URL：
 
 ```
-https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.srmodule
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/WeatherKit.Alert.srmodule
 ```
 
 ### Quantumult X
@@ -68,7 +68,7 @@ hostname = www.qweather.com
 也可以通过订阅以下配置文件直接添加：
 
 ```
-https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/iRingo.WeatherKit.Alert.qx.conf
+https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/WeatherKit.Alert.qx.conf
 ```
 
 ### 通用步骤
@@ -110,11 +110,11 @@ WeatherKitAlert/
 ├── template/
 │   └── stash.alert.handlebars   # Stash 模块模板（Handlebars）
 ├── modules/
-│   ├── iRingo.WeatherKit.Alert.stoverride  # Stash 模块配置
-│   ├── iRingo.WeatherKit.Alert.sgmodule    # Surge 模块配置
-│   ├── iRingo.WeatherKit.Alert.plugin      # Loon 插件配置
-│   ├── iRingo.WeatherKit.Alert.srmodule    # EGERN 模块配置
-│   └── iRingo.WeatherKit.Alert.qx.conf     # Quantumult X 配置
+│   ├── WeatherKit.Alert.stoverride  # Stash 模块配置
+│   ├── WeatherKit.Alert.sgmodule    # Surge 模块配置
+│   ├── WeatherKit.Alert.plugin      # Loon 插件配置
+│   ├── WeatherKit.Alert.srmodule    # EGERN 模块配置
+│   └── WeatherKit.Alert.qx.conf     # Quantumult X 配置
 ├── dist/
 │   └── alert.bundle.js   # 构建产物（CDN 分发）
 ├── rspack.config.mjs     # rspack 构建配置
@@ -160,9 +160,9 @@ npm run build:dev          # 开发模式（不压缩）
 
 ## 致谢
 
-感谢 [NSRingo/WeatherKit](https://github.com/NSRingo/WeatherKit) 项目及原作者（VirgilClyne、WordlessEcho、001）的开创性工作。
+本项目最初基于 [NSRingo/WeatherKit](https://github.com/NSRingo/WeatherKit) 项目，原作者为 VirgilClyne、WordlessEcho、001，感谢他们的开创性工作。
 
-本仓库是 WeatherKit 项目预警模块（Alert Override）的独立维护版本。
+本仓库为预警模块（Alert Override）的独立维护版本，已与 iRingo 项目分离。
 
 ## 许可证
 
