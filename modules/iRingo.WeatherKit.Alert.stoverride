@@ -1,4 +1,4 @@
-name: " iRingo: 🌤 Alert Override"
+name: " iRingo: 🌤 Alert Override"
 desc: |-
   替换和风天气(qweather.com)预警页面
   以 Apple WeatherKit 原生样式呈现预警页面
@@ -9,7 +9,7 @@ author: |-
   001[https://github.com/001ProMax]
 homepage: "https://NSRingo.github.io/guide/Weather/weather-kit"
 icon: "https://developer.apple.com/assets/elements/icons/weatherkit/weatherkit-128x128.png"
-category: " iRingo"
+category: " iRingo"
 date: "2026-07-20 02:30:00"
 
 http:
@@ -20,7 +20,6 @@ http:
       name: WeatherKit.alert.response
       type: response
       require-body: true
-      argument:
 
 script-providers:
   WeatherKit.alert.response:
