@@ -7,9 +7,12 @@ if ($response?.body && typeof $response.body === "string") {
     const alerts = parseAlertHTML($response.body);
     if (alerts.length > 0) {
         $response.body = renderAppleAlert(alerts);
-        // Update content type to HTML
+        // Update content type to HTML and prevent browser caching
         if ($response.headers) {
             $response.headers["Content-Type"] = "text/html; charset=utf-8";
+            $response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            $response.headers["Pragma"] = "no-cache";
+            $response.headers["Expires"] = "0";
             delete $response.headers["Content-Length"];
             delete $response.headers["content-length"];
         }

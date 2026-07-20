@@ -1,7 +1,7 @@
 /**
  * Render Apple WeatherKit-styled multi-alert HTML page
  * Uses Apple's original CSS and DOM structure, only replaces text content
- * First alert is expanded, rest are collapsed (matching Apple's behavior)
+ * All cards are collapsed by default
  * @param {import('./types.d.ts').AlertData[]} alerts
  * @returns {string} Complete HTML page
  */
@@ -35,11 +35,10 @@ export function renderAppleAlert(alerts) {
     var titleSuffix = isExtreme ? "\u6781\u7aef\u5929\u6c14\u8b66\u62a5" : "\u6076\u52a3\u5929\u6c14\u8b66\u62a5";
     var pageTitle = alertCount + " \u5219" + titleSuffix;
 
-    // Build cards
+    // Build cards (all collapsed)
     var cardsHTML = "";
     for (var i = 0; i < alerts.length; i++) {
-        var isFirst = i === 0;
-        cardsHTML += renderCard(alerts[i], isFirst, severityLabels, severityDescriptions);
+        cardsHTML += renderCard(alerts[i], severityLabels, severityDescriptions);
     }
 
     var html = '<!DOCTYPE html><html lang="zh-CN"><head>\n';
@@ -60,21 +59,20 @@ export function renderAppleAlert(alerts) {
 }
 
 /**
- * Render a single alert card
- * First card is expanded, rest are collapsed
+ * Render a single alert card (collapsed by default)
  */
-function renderCard(alert, isExpanded, severityLabels, severityDescriptions) {
+function renderCard(alert, severityLabels, severityDescriptions) {
     var severityLabel = severityLabels[alert.level] || "\u672a\u77e5";
     var severityDescription = severityDescriptions[alert.level] || "\u672a\u77e5\u4e25\u91cd\u7a0b\u5ea6";
 
-    // Card class: "card expanded " for first, "card  " for rest
-    var cardClass = isExpanded ? "card expanded " : "card  ";
+    // Card class (always collapsed by default)
+    var cardClass = "card  ";
 
-    // Chevron class: chevron-down for expanded, chevron-right for collapsed
-    var chevronClass = isExpanded ? "chevron-down" : "chevron-right";
+    // Chevron class: always chevron-right (collapsed)
+    var chevronClass = "chevron-right";
 
-    // Contents max-height: 9999px for expanded, 0px for collapsed
-    var contentsStyle = isExpanded ? ' style="max-height: 9999px;"' : ' style="max-height: 0px;"';
+    // Contents all collapsed by default
+    var contentsStyle = ' style="max-height: 0px;"';
 
     // Build content sections
     var contentHTML = "";
@@ -97,12 +95,8 @@ function renderCard(alert, isExpanded, severityLabels, severityDescriptions) {
         }
     }
 
-    // Issuer section
-    var regionStr = alert.parentRegion;
-    if (alert.region) {
-        regionStr = regionStr ? regionStr + ' ' + alert.region : alert.region;
-    }
-    contentHTML += '<div class="content"><div class="content-title">\u7b7e\u53d1\u8005</div><div class="content-body">' + escapeHTML(regionStr) + '</div></div>';
+    // Issuer section (hardcoded to 国家预警信息发布中心)
+    contentHTML += '<div class="content"><div class="content-title">\u7b7e\u53d1\u8005</div><div class="content-body">\u56fd\u5bb6\u9884\u8b66\u4fe1\u606f\u53d1\u5e03\u4e2d\u5fc3</div></div>';
 
     // The toggle onclick JavaScript (using \x27 to escape single quotes)
     var onclickJS = "var p=this.parentElement;p.classList.toggle(\x27expanded\x27);var c=p.querySelector(\x27.contents\x27);c.style.maxHeight=c.style.maxHeight===\x270px\x27?\x279999px\x27:\x270px\x27;var s=p.querySelector(\x27.ChevronSymbol\x27);s.classList.toggle(\x27chevron-right\x27);s.classList.toggle(\x27chevron-down\x27);";
