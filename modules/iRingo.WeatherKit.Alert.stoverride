@@ -25,5 +25,5 @@ http:
 
 script-providers:
   WeatherKit.alert.response:
-    url: https://github.com/stellarhalo/WeatherKitAlert/releases/latest/download/alert.bundle.js
+    url: https://github.com/stellarhalo/WeatherKitAlert/releases/download/v1.0.0/alert.bundle.js
     interval: 86400
