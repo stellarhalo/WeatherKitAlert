@@ -1,7 +1,8 @@
 /**
  * Render Apple WeatherKit-styled multi-alert HTML page
  * Uses Apple's original CSS and DOM structure, only replaces text content
- * All cards are collapsed by default
+ * Single alert: card expanded, title without count
+ * Multiple alerts: all collapsed, title with "X 则"
  * @param {import('./types.d.ts').AlertData[]} alerts
  * @returns {string} Complete HTML page
  */
@@ -33,12 +34,16 @@ export function renderAppleAlert(alerts) {
         }
     }
     var titleSuffix = isExtreme ? "\u6781\u7aef\u5929\u6c14\u8b66\u62a5" : "\u6076\u52a3\u5929\u6c14\u8b66\u62a5";
-    var pageTitle = alertCount + " \u5219" + titleSuffix;
+    // Single alert: just "恶劣天气警报"/"极端天气警报", no "1 则"
+    // Multiple alerts: "3 则恶劣天气警报"/"3 则极端天气警报"
+    var pageTitle = alertCount >= 2 ? alertCount + " \u5219" + titleSuffix : titleSuffix;
 
-    // Build cards (all collapsed)
+    // Build cards
+    // Single alert: expanded; multiple alerts: all collapsed
+    var isSingle = alertCount === 1;
     var cardsHTML = "";
     for (var i = 0; i < alerts.length; i++) {
-        cardsHTML += renderCard(alerts[i], severityLabels, severityDescriptions);
+        cardsHTML += renderCard(alerts[i], severityLabels, severityDescriptions, isSingle);
     }
 
     var html = '<!DOCTYPE html><html lang="zh-CN"><head>\n';
@@ -59,20 +64,21 @@ export function renderAppleAlert(alerts) {
 }
 
 /**
- * Render a single alert card (collapsed by default)
+ * Render a single alert card
+ * Single alert: expanded; multiple alerts: collapsed
  */
-function renderCard(alert, severityLabels, severityDescriptions) {
+function renderCard(alert, severityLabels, severityDescriptions, isSingle) {
     var severityLabel = severityLabels[alert.level] || "\u672a\u77e5";
     var severityDescription = severityDescriptions[alert.level] || "\u672a\u77e5\u4e25\u91cd\u7a0b\u5ea6";
 
-    // Card class (always collapsed by default)
-    var cardClass = "card  ";
+    // Single alert: expanded; multiple alerts: collapsed
+    var cardClass = isSingle ? "card expanded " : "card  ";
 
-    // Chevron class: always chevron-right (collapsed)
-    var chevronClass = "chevron-right";
+    // Single alert: chevron-down; multiple alerts: chevron-right
+    var chevronClass = isSingle ? "chevron-down" : "chevron-right";
 
-    // Contents all collapsed by default
-    var contentsStyle = ' style="max-height: 0px;"';
+    // Single alert: max-height 9999px; multiple alerts: 0px (collapsed)
+    var contentsStyle = isSingle ? ' style="max-height: 9999px;"' : ' style="max-height: 0px;"';
 
     // Build content sections
     var contentHTML = "";
